@@ -1,3 +1,21 @@
+
+// current time
+var datetime = null,
+date = null;
+
+var update = function () {
+  date = moment(new Date())
+  datetime.html(date.format('dddd, MMMM Do YYYY, hh:mm:ss a'));
+};
+
+$(document).ready(function(){
+  datetime = $('#current-status')
+  update();
+  setInterval(update, 1000);
+});
+
+
+
 // 1. Initialize Firebase
 var config = {
     apiKey: "AIzaSyCHP4hygJ8Oudpxn_ymeNyAZZbiv9Wm368",
