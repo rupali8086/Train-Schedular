@@ -1,3 +1,3 @@
 .entry{ width: 45%; display: inline-table; float: left; }
-.info { width: 50%; display: inline-table; float: left; margin-right: 5%; overflow:auto;max-height: 250px;}
+.info { width: 50%; display: inline-table; float: left; margin-right: 5%; overflow:auto;}
 .jumbotron{ background-image: url("../images/hq.jpg"); color: white;height: 190px;}

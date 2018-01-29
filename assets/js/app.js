@@ -38,6 +38,9 @@ $("#addTrainBtn").on("click", function(){
 	var dest = $("#destinationInput").val().trim();
 	var firstTrain = moment($("#firstTrainInput").val().trim(),"HH:mm" ).format("X");
 	var freq = $("#frequencyInput").val().trim();
+	var update = $("<button id='update'>");
+	var del = $("<button id='del'>");
+	
 
 	// Creates local "temporary" object for holding Train schedule 
 	var newTrain = {
@@ -87,14 +90,28 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
 	console.log(trainFreq);
 
 	// Prettify the Train start
-	var diffTime = moment().diff(moment.unix(trainStart), "minutes");
-	var timeRemainder = moment().diff(moment.unix(trainStart), "minutes") % trainFreq ;
-	var minutes = trainFreq - timeRemainder;
-	var nextTrainArrival = moment().add(minutes, "m").format("hh:mm A"); 
+	// First Time (pushed back 1 year to make sure it comes before current time)
+  var firstTimeConverted = moment(trainStart, "hh:mm").subtract(1, "years");
+  //console.log("FTC: "+firstTimeConverted);
+
+  // Difference between the times
+  var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+  
+  // Time apart (remainder)
+  var timeRemainder = diffTime % trainFreq ;
+
+  // Minute Until Train
+  var minutes = trainFreq - timeRemainder;
+
+  // Next Train
+  var nextTrain = moment().add(minutes, "minutes");
+
+  // Arrival time
+  var nextTrainArrival = moment(nextTrain).format("hh:mm a");
 	
 
-	// Add each train's data into the table
-	$("#trainTable > tbody").prepend("<tr><td>" + trainName + "</td><td>" + trainDest + "</td><td>" + trainFreq + "</td><td>" + nextTrainArrival  + "</td><td>" + minutes + "</td></tr>");
+  // Add each train's data into the table
+  $("#trainTable > tbody").prepend("<tr><td>" + trainName + "</td><td>" + trainDest + "</td><td>" + trainFreq + "</td><td>" + nextTrainArrival  + "</td><td>" + minutes + "</td></tr>");
 
 });
 
