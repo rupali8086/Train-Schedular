@@ -57,7 +57,7 @@ $("#addTrainBtn").on("click", function(event){
 });
 
 
-// 3. Create Firebase event for adding employee to the database and a row in the html when a user adds an entry
+// 3. Create Firebase event for addingtran to the database and a row in the html when a user adds an entry
 database.ref().on("child_added", function(childSnapshot, prevChildKey){
 
 	console.log(childSnapshot.val());
@@ -69,6 +69,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
 	var trainFreq = childSnapshot.val().frequency;
 	var key = childSnapshot.key;
 	var remove = "<button class='glyphicon glyphicon-trash' id=" + key + "></button>"
+	var updateMe = "<button class='glyphicon glyphicon-edit' id=" + key + "></button>"
 
 	// Train Info
 	console.log(trainName);
@@ -80,7 +81,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
    var currentTime = moment();
     console.log("Current Time: " + moment(currentTime).format("hh:mm"));
    //post current time to jumbotron for reference
-   $("#current-status").html(moment(currentTime).format('dddd, MMMM Do YYYY, h:mm:ss a'));
+   $("#current-status").html(moment(currentTime).format('dddd, MMMM Do YYYY, HH:mm:ss a'));
 
 	// First Time (pushed back 1 year to make sure it comes before current time)
   var firstTimeConverted = moment(trainStart, "hh:mm").subtract(1, "years");
@@ -103,7 +104,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
 	
 
   // Add each train's data into the table
-  $("#trainTable > tbody").prepend("<tr><td>" + trainName + "</td><td>" + trainDest + "</td><td>" + trainFreq + "</td><td>" + nextTrainArrival  + "</td><td>" + minutes + "</td><td>"+ remove+ "</td></tr>");
+  $("#trainTable > tbody").prepend("<tr><td>" + trainName + "</td><td>" + trainDest + "</td><td>" + trainFreq + "</td><td>" + nextTrainArrival  + "</td><td>" + minutes + "</td><td>"+ remove+ "</td><td>"+ updateMe + "</td></tr>");
   
   }, function(err) {
         console.log(err);
@@ -111,21 +112,30 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
 
     
 
-    //on click command to delete key when user clicks the trash can gliphicon
+    //on click command to delete key when user clicks the trash gliphicon
     $(document).on("click", ".glyphicon-trash", deleteTrain);
 
     function deleteTrain() {
-        var deleteKey = $(this).attr("id");
+    	alert("are you sure , you want delete this data ??");
+    	var deleteKey = $(this).attr("id");
         database.ref().child(deleteKey).remove();
         location.reload();
     }
 
-    $(document).on("click", ".glyphicon-edit", updateTrain);
-    function updateTrain() {
-        var deleteKey = $(this).attr("id");
-        database.ref().child(deleteKey).remove();
-        location.update();
-    }
+		   //  $(document).on("click", ".glyphicon-edit", updateTrain);
+		   //  function updateTrain(childSnapshot,prevChildKey) {
+		   //      var updateKey = $(this).attr("id");
+		   //      updates[] =data;
+		   //      database.ref().child(updateKey).update(updates);
+		   //      reload_page();
+		   // }
+		  //    var ref = new firebase("https://console.firebase.google.com/u/0/project/project-1-47afa/database/project-1-47afa/data");
+			// 	// Get the data on a post that has changed
+			// database.ref().on("child_changed", function(childSnapshot) {
+			 //   var changedPost = childSnapshot.val();
+			 //  console.log("The updated post title is ");
+			 //  });
 
+
+    
 });
-// glyphicon-edit
