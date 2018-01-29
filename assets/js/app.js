@@ -38,8 +38,8 @@ $("#addTrainBtn").on("click", function(){
 	var dest = $("#destinationInput").val().trim();
 	var firstTrain = moment($("#firstTrainInput").val().trim(),"HH:mm" ).format("X");
 	var freq = $("#frequencyInput").val().trim();
-	var update = $("<button id='update'>");
-	var del = $("<button id='del'>");
+	// var update = $("<button id='update'>");
+	// var del = $("<button id='del'>");
 	
 
 	// Creates local "temporary" object for holding Train schedule 
