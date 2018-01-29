@@ -27,7 +27,7 @@
 
 	<!-- Jumbotron -->
 	<div class="jumbotron">
-		<h4>Today is <span id="current-status"></span></h4>
+		
 		<h1 class="text-center">Any Time Train Time</h1>
 	</div>
 
@@ -37,7 +37,10 @@
 		<!-- Info -->
 			<div class="panel panel-primary info">
 				<div class="panel-heading">
-					<h3 class="panel-title"><strong>Current Train schedule</strong></h3>
+					<h3 class="panel-title">
+						<h4>Today is   #   <span id="current-status"></span></h4>
+						<strong>Current Train schedule</strong>
+					</h3>
 				</div>
 				<div class="panel-body">
 					<table class="table table-hover" id='trainTable'>
@@ -48,9 +51,9 @@
 								<th>Frequency(min)</th>
 								<th>Next Arrival</th>
 								<th>Minutes Away</th>
-								<th>Update</th>
-								<th>Delete</th>
-								
+								<th></th>
+								<th></th>
+															
 							</tr>
 						</thead>
 						<tbody>
@@ -87,7 +90,7 @@
 
 					<div class="form-group">
 						<label for="">Frequency Time(min)</label>
-						<input type="text" class="form-control" id="frequencyInput" placeholder="00">
+						<input type="number" class="form-control" id="frequencyInput" placeholder="00">
 					</div>
 
 					<button type="submit" class="btn btn-primary" id="addTrainBtn">Submit</button>

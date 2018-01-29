@@ -1,21 +1,6 @@
 
-// current time
-var datetime = null,
-date = null;
-
-var update = function () {
-  date = moment(new Date())
-  datetime.html(date.format('dddd, MMMM Do YYYY, hh:mm:ss a'));
-};
-
 $(document).ready(function(){
-  datetime = $('#current-status')
-  update();
-  setInterval(update, 1000);
-});
-
-
-
+  
 // 1. Initialize Firebase
 var config = {
     apiKey: "AIzaSyCHP4hygJ8Oudpxn_ymeNyAZZbiv9Wm368",
@@ -31,15 +16,15 @@ var database = firebase.database();
 
 
 // 2. Button for adding Train Schedule
-$("#addTrainBtn").on("click", function(){
+$("#addTrainBtn").on("click", function(event){
+     
+     event.preventDefault();
 
 	// Grabs user input
 	var trainName = $("#trainNameInput").val().trim();
 	var dest = $("#destinationInput").val().trim();
 	var firstTrain = moment($("#firstTrainInput").val().trim(),"HH:mm" ).format("X");
 	var freq = $("#frequencyInput").val().trim();
-	// var update = $("<button id='update'>");
-	// var del = $("<button id='del'>");
 	
 
 	// Creates local "temporary" object for holding Train schedule 
@@ -82,6 +67,8 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
 	var trainDest = childSnapshot.val().dest;
 	var trainStart = childSnapshot.val().start;
 	var trainFreq = childSnapshot.val().frequency;
+	var key = childSnapshot.key;
+	var remove = "<button class='glyphicon glyphicon-trash' id=" + key + "></button>"
 
 	// Train Info
 	console.log(trainName);
@@ -89,7 +76,12 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
 	console.log(trainStart);
 	console.log(trainFreq);
 
-	// Prettify the Train start
+
+   var currentTime = moment();
+    console.log("Current Time: " + moment(currentTime).format("hh:mm"));
+   //post current time to jumbotron for reference
+   $("#current-status").html(moment(currentTime).format('dddd, MMMM Do YYYY, h:mm:ss a'));
+
 	// First Time (pushed back 1 year to make sure it comes before current time)
   var firstTimeConverted = moment(trainStart, "hh:mm").subtract(1, "years");
   //console.log("FTC: "+firstTimeConverted);
@@ -111,7 +103,29 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
 	
 
   // Add each train's data into the table
-  $("#trainTable > tbody").prepend("<tr><td>" + trainName + "</td><td>" + trainDest + "</td><td>" + trainFreq + "</td><td>" + nextTrainArrival  + "</td><td>" + minutes + "</td></tr>");
+  $("#trainTable > tbody").prepend("<tr><td>" + trainName + "</td><td>" + trainDest + "</td><td>" + trainFreq + "</td><td>" + nextTrainArrival  + "</td><td>" + minutes + "</td><td>"+ remove+ "</td></tr>");
+  
+  }, function(err) {
+        console.log(err);
+    });
+
+    
+
+    //on click command to delete key when user clicks the trash can gliphicon
+    $(document).on("click", ".glyphicon-trash", deleteTrain);
+
+    function deleteTrain() {
+        var deleteKey = $(this).attr("id");
+        database.ref().child(deleteKey).remove();
+        location.reload();
+    }
+
+    $(document).on("click", ".glyphicon-edit", updateTrain);
+    function updateTrain() {
+        var deleteKey = $(this).attr("id");
+        database.ref().child(deleteKey).remove();
+        location.update();
+    }
 
 });
-
+// glyphicon-edit

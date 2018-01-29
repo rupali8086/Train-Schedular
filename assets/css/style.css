@@ -1,3 +1,4 @@
 .entry{ width: 45%; display: inline-table; float: left; }
-.info { width: 50%; display: inline-table; float: left; margin-right: 5%; overflow:auto;}
-.jumbotron{ background-image: url("../images/hq.jpg"); color: white;height: 190px;}
+.info { width: 50%; display: inline-table; float: left; margin-right: 5%; overflow-y: scroll; margin-bottom: 12px;}
+.jumbotron{ background-image: url("../images/hq.jpg"); color: white;height: 190px; }
+h4{color: yellow; text-align: center; }
