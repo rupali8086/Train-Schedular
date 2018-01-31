@@ -158,7 +158,7 @@ hr.small {
     padding: 250px 0;
     width: 100%;
     height: 100%;
-    background-color:coral;
+    background-color:#00fff0;
 }
 /*train schedule and add train */
 .services {
@@ -166,7 +166,7 @@ hr.small {
     width: 100%;
     height: 100%;
 }
-.panelBox{background-color: #00fff0;padding: 50px;margin: 0px; width: 100%;height: 100%;}
+.panelBox{background-color: coral ;padding: 50px;margin: 0px; width: 100%;height: 100%;}
 
 /* Footer */
 footer {
