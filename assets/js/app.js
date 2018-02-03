@@ -167,43 +167,6 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
    });   
 
 
-		/*(document).on("click", ".glyphicon-edit", updateTrain);
-		    function updateTrain(childSnapshot,prevChildKey) {
-		        var updateKey = $(this).attr("id");
-		        // updates[] =newTrain;
-            // var changedPost = childSnapshot.val();
-            var trainName = childSnapshot.val().name;
-            var trainDest = childSnapshot.val().dest;
-            var trainStart = childSnapshot.val().start;
-            var trainFreq = childSnapshot.val().frequency;
-            var key = childSnapshot.key;
-
-            // Creates local "temporary" object for holding Train schedule 
-            var newTrain = {
-              name:  trainName,
-              dest: dest,
-              start: firstTrain,
-              frequency: freq
-            }
-           
-            // Uploads data to the database
-            // database.ref().push(newTrain);
-            // Logs everything to console
-            // console.log(newTrain.name);
-            // console.log(newTrain.dest);
-            // console.log(newTrain.start);
-            // console.log(newTrain.frequency);
-           
-
-		        database.ref(updateKey).once('value').then(function(childSnapshot) {
-              $('#trainNameInput').val(childSnapshot.val().trainName);
-        $('#destinationInput').val(childSnapshot.val().trainDestination);
-        $('#firstTrainInput').val(moment.unix(childSnapshot.val().trainTime).format('HH:mm'));
-        $('#frequencyInput').val(childSnapshot.val().trainFreq);
-        // $('#trainKey').val(childSnapshot.key);
-		   }
-            */
-	 
-
+	
 
 
