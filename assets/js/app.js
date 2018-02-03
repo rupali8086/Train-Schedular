@@ -10,10 +10,47 @@ var config = {
     storageBucket: "project-1-47afa.appspot.com",
     messagingSenderId: "1052854905714"
 };
-firebase.initializeApp(config);
+    firebase.initializeApp(config);
+    // ===================================sign in using google============================================================================
+    
+      // sign in using google
+    $(document).on('click', '.signIn', function() {
+    
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      window.location.href = '../index.html';
+      // ...
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+    });
+    $(this).removeClass('signIn')
+      .addClass('signOut')
+      .html('Sign Out ');
+  });
 
+    $(document).on('click', '.signOut', function () {
+    firebase.auth().signOut().then(function() {
+      $('#services').hide();
+    }, function(error) {
+      // An error happened.
+    });
+    $(this).removeClass('signOut')
+      .addClass('signIn')
+      .html('Google ');
+  });
+// ================================================================================================================================
 var database = firebase.database();
-
 
 // 2. Button for adding Train Schedule
 $("#addTrainBtn").on("click", function(event){
@@ -54,7 +91,9 @@ $("#addTrainBtn").on("click", function(event){
 
 	// Prevents moving to new page
 	return false;
+
 });
+
 
 
 // 3. Create Firebase event for addingtran to the database and a row in the html when a user adds an entry
@@ -77,11 +116,13 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
 	console.log(trainStart);
 	console.log(trainFreq);
 
-
+    // Display--- current time
    var currentTime = moment();
     console.log("Current Time: " + moment(currentTime).format("hh:mm"));
-   //post current time to jumbotron for reference
-   $("#current-status").html(moment(currentTime).format('dddd, MMMM Do YYYY, HH:mm:ss a'));
+    setInterval(function(){
+    $('#current-status').html("Current Time: " + moment().format('dddd, MMMM Do YYYY, HH:mm:ss a'))
+   }, 1000);
+
 
 	// First Time (pushed back 1 year to make sure it comes before current time)
   var firstTimeConverted = moment(trainStart, "hh:mm").subtract(1, "years");
@@ -113,29 +154,56 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
     
 
     //on click command to delete key when user clicks the trash gliphicon
-    $(document).on("click", ".glyphicon-trash", deleteTrain);
+        $(document).on("click", ".glyphicon-trash", deleteTrain);
 
-    function deleteTrain() {
-    	alert("are you sure , you want delete this data ??");
-    	var deleteKey = $(this).attr("id");
-        database.ref().child(deleteKey).remove();
-        location.reload();
-    }
-
-		   //  $(document).on("click", ".glyphicon-edit", updateTrain);
-		   //  function updateTrain(childSnapshot,prevChildKey) {
-		   //      var updateKey = $(this).attr("id");
-		   //      updates[] =data;
-		   //      database.ref().child(updateKey).update(updates);
-		   //      reload_page();
-		   // }
-		  //    var ref = new firebase("https://console.firebase.google.com/u/0/project/project-1-47afa/database/project-1-47afa/data");
-			// 	// Get the data on a post that has changed
-			// database.ref().on("child_changed", function(childSnapshot) {
-			 //   var changedPost = childSnapshot.val();
-			 //  console.log("The updated post title is ");
-			 //  });
+         function deleteTrain() {
+        	alert("are you sure , you want delete this data ??");
+          // if()
+        	var deleteKey = $(this).attr("id");
+            database.ref().child(deleteKey).remove();
+            location.reload();
+        }
+  
+ 
 
 
-    
-});
+		/*(document).on("click", ".glyphicon-edit", updateTrain);
+		    function updateTrain(childSnapshot,prevChildKey) {
+		        var updateKey = $(this).attr("id");
+		        // updates[] =newTrain;
+            // var changedPost = childSnapshot.val();
+            var trainName = childSnapshot.val().name;
+            var trainDest = childSnapshot.val().dest;
+            var trainStart = childSnapshot.val().start;
+            var trainFreq = childSnapshot.val().frequency;
+            var key = childSnapshot.key;
+
+            // Creates local "temporary" object for holding Train schedule 
+            var newTrain = {
+              name:  trainName,
+              dest: dest,
+              start: firstTrain,
+              frequency: freq
+            }
+           
+            // Uploads data to the database
+            // database.ref().push(newTrain);
+            // Logs everything to console
+            // console.log(newTrain.name);
+            // console.log(newTrain.dest);
+            // console.log(newTrain.start);
+            // console.log(newTrain.frequency);
+           
+
+		        database.ref(updateKey).once('value').then(function(childSnapshot) {
+              $('#trainNameInput').val(childSnapshot.val().trainName);
+        $('#destinationInput').val(childSnapshot.val().trainDestination);
+        $('#firstTrainInput').val(moment.unix(childSnapshot.val().trainTime).format('HH:mm'));
+        $('#frequencyInput').val(childSnapshot.val().trainFreq);
+        // $('#trainKey').val(childSnapshot.key);
+		   }
+            */
+	 });	  
+
+
+
