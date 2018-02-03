@@ -164,7 +164,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
             location.reload();
         }
   
- 
+   });   
 
 
 		/*(document).on("click", ".glyphicon-edit", updateTrain);
@@ -203,7 +203,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
         // $('#trainKey').val(childSnapshot.key);
 		   }
             */
-	 });	  
+	 
 
 
 
