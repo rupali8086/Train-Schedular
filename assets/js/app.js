@@ -11,44 +11,7 @@ var config = {
     messagingSenderId: "1052854905714"
 };
     firebase.initializeApp(config);
-    // ===================================sign in using google============================================================================
     
-      // sign in using google
-    $(document).on('click', '.signIn', function() {
-    
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      window.location.href = '../index.html';
-      // ...
-    }).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      // ...
-    });
-    $(this).removeClass('signIn')
-      .addClass('signOut')
-      .html('Sign Out ');
-  });
-
-    $(document).on('click', '.signOut', function () {
-    firebase.auth().signOut().then(function() {
-      $('#services').hide();
-    }, function(error) {
-      // An error happened.
-    });
-    $(this).removeClass('signOut')
-      .addClass('signIn')
-      .html('Google ');
-  });
 // ================================================================================================================================
 var database = firebase.database();
 
@@ -145,7 +108,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey){
 	
 
   // Add each train's data into the table
-  $("#trainTable > tbody").prepend("<tr><td>" + trainName + "</td><td>" + trainDest + "</td><td>" + trainFreq + "</td><td>" + nextTrainArrival  + "</td><td>" + minutes + "</td><td>"+ remove+ "</td><td>"+ updateMe + "</td></tr>");
+  $("#trainTable > tbody").prepend("<tr><td>" + trainName + "</td><td>" + trainDest + "</td><td>" + trainFreq + "</td><td>" + nextTrainArrival  + "</td><td>" + minutes + "</td><td>"+ remove +  "</td></tr>");
   
   }, function(err) {
         console.log(err);
