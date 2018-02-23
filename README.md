@@ -1,21 +1,10 @@
 Overview
 
-In this assignment, you'll create a train schedule application that incorporates Firebase to host arrival and departure data. Your app will retrieve and manipulate this information with Moment.js. This website will provide up-to-date information about various trains, namely their arrival times and how many minutes remain until they arrive at their station.
+This is a Firebase backed train schedule application. It uses HTML, CSS and jQuery to render the schedule and admin panel on the web page.
 
-
-
-
-Setup
-
-
-We'll leave that up to you -- however you like. Just make sure you're using Firebase to store data, GitHub to backup your project, and GithHub Pages to host your finished site.
-
-
+Uses Firebase to host a globally available set of data that will be retrieved and manipulated using Momen.js to provide up-to-date information about various trains arrival times and minutes until arrival.
 
 Instructions
-
-
-
 Make sure that your app suits this basic spec:
 
 
